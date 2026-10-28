@@ -1,0 +1,30 @@
+
+#define SENSOR_PIN A0
+#define RELAY_PIN 7
+
+int threshold = 600;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(RELAY_PIN, OUTPUT);
+
+  // Active-LOW relay: initially OFF
+  digitalWrite(RELAY_PIN, HIGH);
+}
+
+void loop() {
+  int moisture = analogRead(SENSOR_PIN);
+
+  Serial.print("Moisture reading: ");
+  Serial.println(moisture);
+
+  if (moisture > threshold) {
+    digitalWrite(RELAY_PIN, LOW);
+    Serial.println("Dry soil - Pump ON");
+  } else {
+    digitalWrite(RELAY_PIN, HIGH);
+    Serial.println("Wet soil - Pump OFF");
+  }
+
+  delay(1000);
+}
